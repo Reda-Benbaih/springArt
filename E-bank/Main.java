@@ -8,18 +8,18 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         Bank test = new Bank();
         while (true){
-            System.out.print("\n1 pour ajouter un client\n");
-            System.out.print("2 pour creer un compte bancaire\n");
-            System.out.print("3 pour afficher les comptes\n");
-            System.out.print("4 pour consulter le solde\n");
-            System.out.print("5 pour deposer de l'argent\n");
-            System.out.print("6 pour retirer de l'argent\n");
-            System.out.print("7 pour supprimer un compte\n");
-            System.out.print("8 pour creer un compte d'epargne\n");
-            System.out.print("9 pour avance un moi\n");
-            System.out.print("10 pour afficher les comptes d'epargne\n");
-            System.out.print("11 pour transferer compte to compte ");
-            System.out.print("0 pour quitter le programme\n");
+            System.out.println("1 pour ajouter un client");
+            System.out.println("2 pour creer un compte bancaire");
+            System.out.println("3 pour afficher les comptes");
+            System.out.println("4 pour consulter le solde");
+            System.out.println("5 pour deposer de l'argent");
+            System.out.println("6 pour retirer de l'argent");
+            System.out.println("7 pour supprimer un compte");
+            System.out.println("8 pour creer un compte d'epargne");
+            System.out.println("9 pour avance un moi");
+            System.out.println("10 pour afficher les comptes d'epargne");
+            System.out.println("11 pour transferer compte to compte ");
+            System.out.println("0 pour quitter le programme");
             int choice = scan.nextInt();
             if (choice == 0){
                 break;
@@ -33,7 +33,7 @@ public class Main {
                 case 6 : test.withdraw();break;
                 case 7 : test.deleteAccount();break;
                 case 8 : test.createSavingAccount();break;
-                case 9 : test.monthLater();
+                case 9 : test.monthLater();break;
                 case 10 : test.showSavingAccounts();break;
                 case 11 : test.transaction();break;
                 default: System.out.println("ce choix n'existe pas !!!");
