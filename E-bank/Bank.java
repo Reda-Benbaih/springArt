@@ -17,34 +17,34 @@ public class Bank{
     Scanner scan = new Scanner(System.in);
 
     public void addClient(){
-        System.out.print("entrer votre nom complet :\n");
+        System.out.println("entrer votre nom :c");
         String fullname = scan.next();
 
-        System.out.print("entrer votre age : \n");
+        System.out.println("entrer votre age :c     ");
         int age = scan.nextInt();
         scan.nextLine();
 
         if (age < 18){
-            System.out.print("tu ne peux pas etre a client .\n");
+            System.out.println("tu ne peux pas etre a client .");
             return;
         }
 
-        System.out.print("entrer votre id : \n");
+        System.out.println("entrer votre id :");
         String id = scan.next();
 
         Client newclient = new Client(fullname,age,id);
 
         clientList.add(newclient);
-        System.out.print(clientList);
+        System.out.println(clientList);
     }
 
     public void createAccount(){
         if(clientList.isEmpty()){
-            System.out.print("il y'a aucun client .\n");
+            System.out.println("il y'a aucun client .");
             return;
         }
 
-        System.out.print("entrer votre number : ");
+        System.out.println("entrer votre number : ");
         int searchNumber = scan.nextInt();
         Client owner = null;
 
@@ -60,11 +60,11 @@ public class Bank{
             return;
         }
 
-        System.out.print("entrer votre solde : \n");
+        System.out.println("entrer votre solde :");
         double sold = scan.nextDouble();
 
         if (sold < 100){
-            System.out.print("le solde est insuffisant ");
+            System.out.println("le solde est insuffisant ");
             return;
         }
 
@@ -77,7 +77,7 @@ public class Bank{
 
         Account newAccount = new Account(sold,accountNumber,"normal account",owner);
         accountList.add(newAccount);
-        System.out.print(accountList);
+        System.out.println(accountList);
     }
 
     public void displayAccounts() {
@@ -90,11 +90,11 @@ public class Bank{
 //                    acc.getTypeAccount() + " | " +
 //                    acc.getSold());
 //        }
-        System.out.print(accountList);
+        System.out.println(accountList);
     }
 
     public void consultBalance() {
-        System.out.print("Numéro du compte : ");
+        System.out.println("Numéro du compte : ");
         int num = scan.nextInt();
 
         for (Account acc : accountList) {
@@ -107,12 +107,12 @@ public class Bank{
     }
 
     public void deposit() {
-        System.out.print("Numéro du compte : ");
+        System.out.println("Numéro du compte : ");
         int num = scan.nextInt();
 
         for (Account acc : accountList) {
             if (acc.getAccountNumber() == num) {
-                System.out.print("Montant : ");
+                System.out.println("Montant : ");
                 double amount = scan.nextDouble();
                 if (amount > 0) {
                     acc.setSold(acc.getSold() + amount);
@@ -124,12 +124,12 @@ public class Bank{
     }
 
     public void withdraw() {
-        System.out.print("Numéro du compte : ");
+        System.out.println("Numéro du compte : ");
         int num = scan.nextInt();
 
         for (Account acc : accountList) {
             if (acc.getAccountNumber() == num) {
-                System.out.print("Montant : ");
+                System.out.println("Montant : ");
                 double amount = scan.nextDouble();
                 if (amount <= acc.getSold()) {
                     acc.setSold(acc.getSold() - amount);
@@ -143,7 +143,7 @@ public class Bank{
     }
 
     public void deleteAccount() {
-        System.out.print("Numéro du compte : ");
+        System.out.println("Numéro du compte : ");
         int num = scan.nextInt();
         accountList.removeIf(acc -> acc.getAccountNumber() == num && acc.getSold() == 0);
         savingAccountsList.removeIf(acc -> acc.getAccountNumber() == num * 10  && acc.getSold() == 0);
@@ -151,7 +151,7 @@ public class Bank{
     }
 
     public void createSavingAccount(){
-     System.out.print("entrer votre nombre : ");
+     System.out.println("entrer votre nombre : ");
      int num = scan.nextInt();
 
      Client owner = null;
@@ -164,11 +164,11 @@ public class Bank{
      }
 
      if (owner == null){
-         System.out.print("ce client n'existe pas");
+         System.out.println("ce client n'existe pas");
          return;
      }
 
-     System.out.print("entrer votre numero de compte :");
+     System.out.println("entrer votre numero de compte :");
      int num1 = scan.nextInt();
 
      Account haveAcc = null;
@@ -180,14 +180,14 @@ public class Bank{
          }
      }
      if (haveAcc == null){
-         System.out.print("ce client n'a pas cree un compte ");
+         System.out.println("ce client n'a pas cree un compte ");
          return;
      }
-      System.out.print("entrer le solde : ");
+      System.out.println("entrer le solde : ");
      double sold = scan.nextDouble();
 
      if (sold < 300){
-         System.out.print("solde insufisant !!");
+         System.out.println("solde insufisant !!");
          return;
      }
 
@@ -208,7 +208,7 @@ public class Bank{
             System.out.println("Aucun compte bancaire.");
             return;
         }
-        System.out.print(savingAccountsList);
+        System.out.println(savingAccountsList);
     }
 
     public void transaction(){
@@ -216,7 +216,7 @@ public class Bank{
             System.out.println("Aucun compte bancaire.");
             return;
         }
-        System.out.print("entrer numero de compte : ");
+        System.out.println("entrer numero de compte : ");
         int num = scan.nextInt();
 
         boolean found = false;
@@ -232,14 +232,14 @@ public class Bank{
             }
         }
         if (!found){
-            System.out.print("ce compte n'existe pas ");
+            System.out.println("ce compte n'existe pas ");
             return;
         }
-        System.out.print("entrer numero de autre compte : ");
+        System.out.println("entrer numero de autre compte : ");
         int num1 = scan.nextInt();
 
         if (num == num1){
-            System.out.print("tu peux pas le droit ");
+            System.out.println("tu peux pas le droit ");
             return;
         }
 
@@ -251,18 +251,18 @@ public class Bank{
             }
         }
         if (!found1){
-            System.out.print("ce compte n'existe pas ");
+            System.out.println("ce compte n'existe pas ");
             return;
         }
-        System.out.print("entre le solde qui tu veux donne");
+        System.out.println("entre le solde qui tu veux donne");
         double sold = scan.nextDouble();
 
         if(sender.getSold() >= sold && sold > 0 ){
             sender.setSold(sender.getSold() - sold );
             reciever.setSold(reciever.getSold() + sold);
-            System.out.print("transaction reussi : ");
+            System.out.println("transaction reussi : ");
         }else{
-            System.out.print("Impossible de faire cet operation : ");
+            System.out.println("Impossible de faire cet operation : ");
 
         }
 
