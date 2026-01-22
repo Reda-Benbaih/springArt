@@ -18,6 +18,7 @@ public class Main {
             System.out.print("8 pour creer un compte d'epargne\n");
             System.out.print("9 pour avance un moi\n");
             System.out.print("10 pour afficher les comptes d'epargne\n");
+            System.out.print("11 pour transferer compte to compte ");
             System.out.print("0 pour quitter le programme\n");
             int choice = scan.nextInt();
             if (choice == 0){
@@ -34,6 +35,7 @@ public class Main {
                 case 8 : test.createSavingAccount();break;
                 case 9 : test.monthLater();
                 case 10 : test.showSavingAccounts();break;
+                case 11 : test.transaction();break;
                 default: System.out.println("ce choix n'existe pas !!!");
             }
         }
