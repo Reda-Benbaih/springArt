@@ -1,6 +1,5 @@
 package projects.ebank;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -146,8 +145,8 @@ public class Bank{
     public void deleteAccount() {
         System.out.print("Numéro du compte : ");
         int num = scan.nextInt();
-        accountList.removeIf(acc -> acc.getAccountNumber() == num);
-        savingAccountsList.removeIf(acc -> acc.getAccountNumber() == num * 10);
+        accountList.removeIf(acc -> acc.getAccountNumber() == num && acc.getSold() == 0);
+        savingAccountsList.removeIf(acc -> acc.getAccountNumber() == num * 10  && acc.getSold() == 0);
         System.out.println("Compte supprimé.");
     }
 
@@ -210,6 +209,63 @@ public class Bank{
             return;
         }
         System.out.print(savingAccountsList);
+    }
+
+    public void transaction(){
+        if (accountList.isEmpty()) {
+            System.out.println("Aucun compte bancaire.");
+            return;
+        }
+        System.out.print("entrer numero de compte : ");
+        int num = scan.nextInt();
+
+        boolean found = false;
+        boolean found1 = false;
+        Account sender = null;
+        Account reciever = null;
+
+        for (Account acc : accountList) {
+            if (acc.getAccountNumber() == num){
+               found = true;
+               sender = acc;
+               break;
+            }
+        }
+        if (!found){
+            System.out.print("ce compte n'existe pas ");
+            return;
+        }
+        System.out.print("entrer numero de autre compte : ");
+        int num1 = scan.nextInt();
+
+        if (num == num1){
+            System.out.print("tu peux pas le droit ");
+            return;
+        }
+
+        for (Account acc : accountList) {
+            if (acc.getAccountNumber() == num1){
+                found1 = true;
+                reciever = acc;
+                break;
+            }
+        }
+        if (!found1){
+            System.out.print("ce compte n'existe pas ");
+            return;
+        }
+        System.out.print("entre le solde qui tu veux donne");
+        double sold = scan.nextDouble();
+
+        if(sender.getSold() >= sold && sold > 0 ){
+            sender.setSold(sender.getSold() - sold );
+            reciever.setSold(reciever.getSold() + sold);
+            System.out.print("transaction reussi : ");
+        }else{
+            System.out.print("Impossible de faire cet operation : ");
+
+        }
+
     }
 
 }
