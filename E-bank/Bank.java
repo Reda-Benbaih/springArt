@@ -17,10 +17,10 @@ public class Bank{
     Scanner scan = new Scanner(System.in);
 
     public void addClient(){
-        System.out.println("entrer votre nom :c");
+        System.out.println("entrer votre nom :");
         String fullname = scan.next();
 
-        System.out.println("entrer votre age :c     ");
+        System.out.println("entrer votre age : ");
         int age = scan.nextInt();
         scan.nextLine();
 
