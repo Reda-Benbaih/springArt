@@ -279,7 +279,14 @@ public class Market {
             System.out.println("ce trader n'existe pas ");
             return;
         }
+        if (seller.getPortfolio().getAssets().isEmpty()){
+            System.out.println("tu n'a pas aucun asset");
+            return;
+        }
+
+        System.out.println(seller.getPortfolio().getAssets());
         
+
 
     }
 
