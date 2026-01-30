@@ -1,22 +1,14 @@
 import java.util.List;
 
-public class Portfolio<B,A,AV> {
-    private B balence;
+public class Portfolio<A extends Asset > {
     private List<A> assets;
-    private AV assetValue;
+    private Double assetValue;
 
-    public Portfolio(B balence, List<A> assets,AV assetvalue) {
-        this.balence = balence;
+
+    public Portfolio(List<A> assets,Double assetvalue) {
         this.assets = assets;
         this.assetValue = assetvalue;
-    }
-
-    public B getBalence() {
-        return balence;
-    }
-
-    public void setBalence(B balence) {
-        this.balence = balence;
+        updateAssetValue();
     }
 
     public List<A> getAssets() {
@@ -27,11 +19,27 @@ public class Portfolio<B,A,AV> {
         this.assets = assets;
     }
 
-    public AV getAssetvalue() {
+    public Double getAssetvalue() {
         return assetValue;
     }
 
-    public void setAssetvalue(AV assetvalue) {
+    public void setAssetvalue(Double assetvalue) {
         this.assetValue = assetvalue;
+    }
+
+    public void updateAssetValue() {
+        double total = 0;
+        for (A a : assets) {
+            total += a.getPrice() * a.getQuantity();
+        }
+        this.assetValue = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "assets=" + assets +
+                ", assetValue=" + assetValue +
+                '}';
     }
 }
