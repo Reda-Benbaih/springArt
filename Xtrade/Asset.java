@@ -1,10 +1,10 @@
 public  abstract class Asset {
     private String type;
-    private int quantity;
+    private double quantity;
     private double price;
     private int code;
     private String name;
-    public Asset(String type, int quantity, double price, int code, String name){
+    public Asset(String type, double quantity, double price, int code, String name){
         this.type = type;
         this.quantity = quantity;
         this.price = price;
@@ -20,11 +20,11 @@ public  abstract class Asset {
         this.type = type;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -50,5 +50,16 @@ public  abstract class Asset {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Asset{"+
+                "assetType : "+getType()+
+                ", assetQuantity : " + getQuantity()+
+                ", assetPrice : "+ getPrice()+
+                ", assetCode : "+ getCode()+
+                ", assetname :  " + getName()+
+                "}\n";
     }
 }
