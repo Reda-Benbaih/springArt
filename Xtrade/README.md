@@ -1,0 +1,1 @@
+![xtrade.jpg](xtrade.jpg)
