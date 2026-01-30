@@ -25,12 +25,14 @@ public class Market {
 
         System.out.println("entrer votre age : ");
         int age = scan.nextInt();
+        scan.nextLine();
         if(age <18 ){
             System.out.println("tu ne peut pas etre un trader");
             return;
         }
         System.out.println("entrer votre solde :");
         double balence = scan.nextDouble();
+        scan.nextLine();
 
         if (balence < 500){
             System.out.println("solde insuffisant");
@@ -42,9 +44,9 @@ public class Market {
     }
     public Boolean adminCheck(){
         System.out.println("entrer username");
-        String username = scan.next();
+        String username = scan.nextLine();
         System.out.println("entrer password");
-        String password = scan.next();
+        String password = scan.nextLine();
         for(Admin ad : adminList){
             if (ad.getUsername().equals(username) && ad.getPassword().equals(password)){
                 System.out.println("access permitted");
@@ -55,11 +57,15 @@ public class Market {
     }
     public void adminMenu(){
         while (true) {
-            System.out.println("1 pour ajouter assets ");
-            System.out.println("2 pour modifier assets ");
+            System.out.println("1 pour ajouter les actifs ");
+            System.out.println("2 pour modifier les actifs ");
             System.out.println("3 pour afficher les actifs");
+            System.out.println("4 pour ajouter un trader");
+            System.out.println("5 pour afficher les traders");
+            System.out.println("6 pour voir historique");
             System.out.println("0 pour quitter ");
             int choice = scan.nextInt();
+            scan.nextLine();
             if(choice == 0 ){
                 break;
             }
@@ -67,6 +73,9 @@ public class Market {
                 case 1 : addAsset();break;
                 case 2 : changeAssetValue();break;
                 case 3 : showAssets();break;
+                case 4 : addTrader();break;
+                case 5 : showTrader();break;
+                case 6 : showHistory();break;
                 default:
                     System.out.println("ce choix indisponible !!");
                     break;
@@ -75,7 +84,27 @@ public class Market {
     }
 
     public void traderMenu(){
-        System.out.println("test");
+        while (true) {
+            System.out.println("1 pour acheter un actif ");
+            System.out.println("2 pour vendre un actif ");
+            System.out.println("3 pour afficher les actifs");
+            System.out.println("4 pour voir portfolio");
+            System.out.println("0 pour quitter ");
+            int choice = scan.nextInt();
+            scan.nextLine();
+            if(choice == 0 ){
+                break;
+            }
+            switch (choice){
+                case 1 : buyAsset();break;
+                case 2 : sellAsset();break;
+                case 3 : showAssets();break;
+                case 4 : showPortfolio();break;
+                default:
+                    System.out.println("ce choix indisponible !!");
+                    break;
+            }
+        }
     }
 
     public void addAsset(){
@@ -83,18 +112,21 @@ public class Market {
         do{
             assetCode = (int) (Math.random()* 9000) +1000;
         }while (assetCodeList.contains(assetCode));
+        assetCodeList.add(assetCode);
 
         System.out.println("entrer le nom d'actif");
-        String assetName = scan.next();
+        String assetName = scan.nextLine();
 
         System.out.println("entrer le prix d'actif");
         double assetprice = scan.nextDouble();
+        scan.nextLine();
 
         System.out.println("entrer quantite d'actif");
         int assetQuantity = scan.nextInt();
+        scan.nextLine();
 
         System.out.println("entrer le type d'actif(stock/crypto)");
-        String assetType = scan.next();
+        String assetType = scan.nextLine();
 
 //        assetType.toLowerCase();
 
@@ -119,6 +151,10 @@ public class Market {
             double randomNum = 0.95f + (Math.random() * (1.10f - 0.95f));
             a.setPrice(a.getPrice()* randomNum);
         }
+        for (Trader t : traderList) {
+            t.getPortfolio().updateAssetValue();
+        }
+
     }
 
     public void showAssets(){
@@ -137,6 +173,7 @@ public class Market {
 
         System.out.println("entrer votre trader id ");
         int num = scan.nextInt();
+        scan.nextLine();
 
         boolean found = false;
         Trader buyer = null;
@@ -156,10 +193,12 @@ public class Market {
         System.out.println("1 pour acheter par quantite");
         System.out.println("2 pour acheter par balence ");
         int choice = scan.nextInt();
+        scan.nextLine();
 
         if( choice == 1){
             System.out.println("entrer le code d'actif ");
             int assetcode = scan.nextInt();
+            scan.nextLine();
             Asset a = null;
             boolean found1 = false;
             for (Asset act : assetsList){
@@ -175,15 +214,16 @@ public class Market {
             }
             System.out.println("entrer la quantite ");
             double assetnum = scan.nextDouble();
+            scan.nextLine();
             double total = a.getPrice() * assetnum;
 
-            if(assetnum > 0 && assetnum < a.getQuantity() && total <= buyer.getBalence()){
+            if(assetnum > 0 && assetnum <= a.getQuantity() && total <= buyer.getBalence()){
                 LocalDateTime now = LocalDateTime.now();
 
                 a.setQuantity(a.getQuantity() - assetnum);
                 buyer.setBalence(buyer.getBalence() - total);
 
-                Transaction newTrasaction = new Transaction("quantity", a,now,assetnum,total);
+                Transaction newTrasaction = new Transaction("buy quantity", a,now,assetnum,total);
                 history.add(newTrasaction);
 
                 boolean found2 = false;
@@ -204,6 +244,7 @@ public class Market {
                     }
                     buyer.getPortfolio().getAssets().add(traderAsset);
                 }
+                buyer.getPortfolio().updateAssetValue();
                 System.out.println("Achat réussi !");
             }else{
                 System.out.println("tu ne peux pas ");
@@ -212,6 +253,7 @@ public class Market {
         }else if (choice == 2){
             System.out.println("entrer le code d'actif ");
             int assetcode = scan.nextInt();
+            scan.nextLine();
             Asset a = null;
             for (Asset act : assetsList){
                 if (act.getCode() == assetcode){
@@ -225,14 +267,15 @@ public class Market {
             }
             System.out.println("entrer la quantite ");
             double sold = scan.nextDouble();
+            scan.nextLine();
 
             double canBuy = sold / a.getPrice();
-            if(sold > 0 && sold < buyer.getBalence() && canBuy < a.getQuantity()){
+            if(sold > 0 && sold <= buyer.getBalence() && canBuy <= a.getQuantity()){
                 LocalDateTime now = LocalDateTime.now();
                 a.setQuantity(a.getQuantity() - canBuy);
                 buyer.setBalence(buyer.getBalence() - sold);
 
-                Transaction newTrasaction = new Transaction("balence", a,now,canBuy,sold);
+                Transaction newTrasaction = new Transaction("buy balence", a,now,canBuy,sold);
                 history.add(newTrasaction);
 
                 boolean found2 = false;
@@ -251,6 +294,8 @@ public class Market {
                         traderAsset = new Crypto(a.getType(), canBuy, a.getPrice(), a.getCode(), a.getName());
                     }
                     buyer.getPortfolio().getAssets().add(traderAsset);
+                    buyer.getPortfolio().updateAssetValue();
+
                     System.out.println("Achat réussi !");
                 }
 
@@ -264,10 +309,12 @@ public class Market {
     public void sellAsset(){
         if(traderList.isEmpty()){
             System.out.println("il y'a aucun trader");
+            return;
         }
 
         System.out.println("entrer votre trader id");
         int num = scan.nextInt();
+        scan.nextLine();
         Trader seller = null;
         for(Trader trad : traderList){
             if (trad.getTraderId() == num){
@@ -284,10 +331,87 @@ public class Market {
             return;
         }
 
-        System.out.println(seller.getPortfolio().getAssets());
-        
+        System.out.println(seller.getPortfolio());
 
+        System.out.println("entrer le code d'actif ");
+        int assetcode = scan.nextInt();
+        scan.nextLine();
 
+        Asset item = null;
+        Asset itemMarket = null;
+
+        for (Asset a : seller.getPortfolio().getAssets()){
+            if (assetcode == a.getCode()){
+                item = a;
+                break;
+            }
+        }
+        for (Asset b : assetsList){
+            if (assetcode == b.getCode()){
+                itemMarket = b;
+            }
+        }
+        if(itemMarket == null){
+            System.out.println("n'a pas dans le stock");
+            return;
+        }
+
+        if (item == null){
+            System.out.println("tu n'a pas cet actif ");
+            return;
+        }
+
+        System.out.println("entrer la quantite tu veux vendre ");
+        double itemQuantity = scan.nextDouble();
+        scan.nextLine();
+
+        if (itemQuantity > 0 && item.getQuantity() >= itemQuantity){
+            double total = itemMarket.getPrice()* itemQuantity;
+            LocalDateTime now = LocalDateTime.now();
+            item.setQuantity(item.getQuantity() - itemQuantity);
+            seller.setBalence(seller.getBalence() + (itemQuantity * itemMarket.getPrice() ));
+            itemMarket.setQuantity(itemMarket.getQuantity() + itemQuantity);
+
+            Transaction newTrasaction = new Transaction(item.getType(), item,now,itemQuantity,total);
+            history.add(newTrasaction);
+
+        }else {
+            System.out.println("tu ne peux pas");
+        }
+        seller.getPortfolio().getAssets().removeIf(s -> s.getQuantity() == 0);
+        seller.getPortfolio().updateAssetValue();
+    }
+    public void showHistory(){
+        if(history.isEmpty()){
+            System.out.println("il y'a aucun transaction : ");
+            return;
+        }
+        System.out.println(history);
     }
 
+    public void showTrader(){
+        if(traderList.isEmpty()){
+            System.out.println("il y'a aucun transaction : ");
+            return;
+        }
+        System.out.println(traderList);
+    }
+
+    public void showPortfolio(){
+        System.out.println("entrer votre id ");
+        int num = scan.nextInt();
+        scan.nextLine();
+        boolean found = false;
+        for(Trader trad : traderList){
+            if (num == trad.getTraderId()){
+                found = true;
+                System.out.println(trad.getPortfolio());
+                break;
+            }
+        }
+        if (!found){
+            System.out.println("ce trader n'existe ");
+            return;
+        }
+    }
 }
