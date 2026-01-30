@@ -12,6 +12,7 @@ public class Main {
             System.out.println("2 pour trader");
             System.out.println("0 pour quitter");
             int choice = scan.nextInt();
+            scan.nextLine();
             if(choice == 0 ){
                 System.out.println("programme terminee");
                 break;
