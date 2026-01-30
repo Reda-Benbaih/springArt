@@ -4,13 +4,13 @@ public class Trader extends Person{
     final private int traderId;
     private double balence ;
     private static int idCounter = 1;
-    private Portfolio<Double,Asset,Double> portfolio;
+    private Portfolio<Asset> portfolio;
 
     public Trader (String name,String id,int age,double balence){
         super(name,id,age);
         this.traderId = idCounter++;
         this.balence = balence;
-        this.portfolio = new Portfolio<>(balence, new ArrayList<>(), 0.0);
+        this.portfolio = new Portfolio<>( new ArrayList<>(), 0.0);
     }
 
     public int getTraderId() {
@@ -25,11 +25,19 @@ public class Trader extends Person{
         this.balence = balence;
     }
 
-    public Portfolio<Double, Asset, Double> getPortfolio() {
+    public Portfolio< Asset> getPortfolio() {
         return portfolio;
     }
 
-    public void setPortfolio(Portfolio<Double, Asset, Double> portfolio) {
-        this.portfolio = portfolio;
+    public void setPortfolio(Portfolio<Asset> portfolio) {this.portfolio = portfolio;
+    }
+
+    @Override
+    public String toString() {
+        return "Trader{" +
+                "traderId=" + traderId +
+                ", balence=" + balence +
+                ", portfolio=" + portfolio +
+                '}';
     }
 }
